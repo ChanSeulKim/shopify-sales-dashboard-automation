@@ -1,0 +1,40 @@
+// =============================================
+// TRIGGER SETUP
+// Run these once manually from the Apps Script editor to register the time-based triggers. Re-running is safe — each function clears its own previous trigger before creating a new one.
+// =============================================
+
+// Registers runDailySync (daily/weekly/monthly metrics) to run once per day at 09:00 KST.
+function setupDailySyncTrigger() {
+  ScriptApp.getProjectTriggers().forEach(t => {
+    if (t.getHandlerFunction() === 'runDailySync') {
+      ScriptApp.deleteTrigger(t);
+    }
+  });
+
+  ScriptApp.newTrigger('runDailySync')
+    .timeBased()
+    .everyDays(1)
+    .atHour(9)
+    .inTimezone('Asia/Seoul')
+    .create();
+
+  Logger.log('Trigger registered: runDailySync daily at 09:00 KST');
+}
+
+// Registers runDailyProductTypeSync (category sales + top 3 products) to run once per day at 09:00 KST.
+function setupProductTypeTrigger() {
+  ScriptApp.getProjectTriggers().forEach(t => {
+    if (t.getHandlerFunction() === 'runDailyProductTypeSync') {
+      ScriptApp.deleteTrigger(t);
+    }
+  });
+
+  ScriptApp.newTrigger('runDailyProductTypeSync')
+    .timeBased()
+    .everyDays(1)
+    .atHour(9)
+    .inTimezone('Asia/Seoul')
+    .create();
+
+  Logger.log('Trigger registered: runDailyProductTypeSync daily at 09:00 KST');
+}
